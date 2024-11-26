@@ -29,7 +29,7 @@
         }
         .games {
             display: flex;
-            overflow-x: hidden;
+            overflow-x: auto;
             width: 80%; /* 80% del ancho de la pantalla */
             max-width: 1200px; /* Máximo de ancho */
             height: 350px;
@@ -109,6 +109,15 @@
             font-size: 2.5rem;
             font-family: 'Courier New', Courier, monospace;
         }
+        .month-title {
+            text-align: center;
+            font-size: 1.8rem; /* Tamaño del texto */
+            font-weight: bold;
+            margin-bottom: 10px; /* Espacio entre el título y la fila */
+            color: #094505; /* Color del texto, para hacer contraste */
+            font-family: 'Courier New', Courier, monospace; /* Fuente consistente */
+        }
+
 
         /* Ajustes responsivos */
         @media (max-width: 768px) {
@@ -138,29 +147,37 @@
     <p> A continuación, se muestran los juegos realizados a lo largo del semestre</p>
 
     <!-- Fila 1 -->
+    <div class="month-title">Agosto</div>
     <div class="row">
         <div class="arrow left-arrow" data-row="1">&#8592;</div>
         <div class="games" id="games-row-1"></div>
         <div class="arrow right-arrow" data-row="1">&#8594;</div>
     </div>
+
     <!-- Fila 2 -->
+    <div class="month-title">Septiembre</div>
     <div class="row">
         <div class="arrow left-arrow" data-row="2">&#8592;</div>
         <div class="games" id="games-row-2"></div>
         <div class="arrow right-arrow" data-row="2">&#8594;</div>
     </div>
+
     <!-- Fila 3 -->
+    <div class="month-title">Octubre</div>
     <div class="row">
         <div class="arrow left-arrow" data-row="3">&#8592;</div>
         <div class="games" id="games-row-3"></div>
         <div class="arrow right-arrow" data-row="3">&#8594;</div>
     </div>
+
     <!-- Fila 4 -->
+    <div class="month-title">Noviembre</div>
     <div class="row">
         <div class="arrow left-arrow" data-row="4">&#8592;</div>
         <div class="games" id="games-row-4"></div>
         <div class="arrow right-arrow" data-row="4">&#8594;</div>
     </div>
+
 
     <!-- Modal -->
     <div class="modal">
@@ -170,61 +187,86 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const modal = document.querySelector(".modal");
-            const modalContent = document.querySelector(".modal-content");
-            const closeModal = document.querySelector(".close");
+        const modal = document.querySelector(".modal");
+        const modalContent = document.querySelector(".modal-content");
+        const closeModal = document.querySelector(".close");
 
-            // Cerrar modal
-            closeModal.addEventListener("click", function () {
+        // Cerrar modal
+        closeModal.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
                 modal.style.display = "none";
-            });
+            }
+        });
 
-            window.addEventListener("click", function (event) {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
+        // Generar filas dinámicamente
+        const meses = ["Agosto", "Septiembre", "Octubre", "Noviembre"];
+        const letras = ["A", "B", "O", "N"]; // Septiembre corregido a "B"
 
-            // Generar filas dinámicamente
-            for (let row = 1; row <= 4; row++) {
-                const gamesContainer = document.querySelector(`#games-row-${row}`);
-                for (let i = 1; i <= 7; i++) {
+        for (let row = 1; row <= 4; row++) {
+            const gamesContainer = document.querySelector(`#games-row-${row}`);
+            const mes = meses[row - 1]; // Obtener el mes correspondiente
+            const letra = letras[row - 1]; // Letra correspondiente para las imágenes
+
+            for (let i = 1; i <= 100; i++) {
+                const img = new Image();
+                const imgSrc = `img/${mes}/imagen${letra}${i}.jpg`;
+                img.src = imgSrc;
+
+                // Solo crear el componente si la imagen se carga correctamente
+                img.onload = function () {
                     const gameBox = document.createElement("div");
                     gameBox.classList.add("game-box");
-                    gameBox.innerHTML = `<img src="img/imagen${(row - 1) * 7 + i}.jpg" alt="Juego ${(row - 1) * 7 + i}">`;
+
+                    gameBox.innerHTML = `<img src="${imgSrc}" alt="Juego ${mes} ${i}">`;
                     gamesContainer.appendChild(gameBox);
 
                     // Evento para abrir modal
                     gameBox.addEventListener("click", function () {
+                        const imgSrcA = `img/${mes}/imagen${letra}${i}a.jpg`;
+                        const imgSrcB = `img/${mes}/imagen${letra}${i}b.jpg`;
+
                         modalContent.innerHTML = `
-                            <img src="img/imagen${(row - 1) * 7 + i}a.jpg" alt="Juego ${(row - 1) * 7 + i} - Imagen A">
-                            <img src="img/imagen${(row - 1) * 7 + i}b.jpg" alt="Juego ${(row - 1) * 7 + i} - Imagen B">
+                            <img src="${imgSrcA}" alt="Juego ${mes} ${i} - Imagen A">
+                            <img src="${imgSrcB}" alt="Juego ${mes} ${i} - Imagen B">
                         `;
                         modal.style.display = "flex";
                     });
-                }
+                };
+
+                // Si no carga, no hacemos nada (omitimos el componente)
+                img.onerror = function () {
+                    return; // Simplemente no generamos el componente
+                };
             }
 
-            // Configuración de flechas
-            const leftArrows = document.querySelectorAll(".left-arrow");
-            const rightArrows = document.querySelectorAll(".right-arrow");
+        }
 
-            leftArrows.forEach(arrow => {
-                arrow.addEventListener("click", function () {
-                    const row = arrow.getAttribute("data-row");
-                    const gamesContainer = document.querySelector(`#games-row-${row}`);
-                    gamesContainer.scrollBy({ left: -660, behavior: "smooth" });
-                });
-            });
+        // Configuración de flechas
+        const leftArrows = document.querySelectorAll(".left-arrow");
+        const rightArrows = document.querySelectorAll(".right-arrow");
 
-            rightArrows.forEach(arrow => {
-                arrow.addEventListener("click", function () {
-                    const row = arrow.getAttribute("data-row");
-                    const gamesContainer = document.querySelector(`#games-row-${row}`);
-                    gamesContainer.scrollBy({ left: 660, behavior: "smooth" });
-                });
+        leftArrows.forEach(arrow => {
+            arrow.addEventListener("click", function () {
+                const row = arrow.getAttribute("data-row");
+                const gamesContainer = document.querySelector(`#games-row-${row}`);
+                gamesContainer.scrollBy({ left: -660, behavior: "smooth" });
             });
         });
+
+        rightArrows.forEach(arrow => {
+            arrow.addEventListener("click", function () {
+                const row = arrow.getAttribute("data-row");
+                const gamesContainer = document.querySelector(`#games-row-${row}`);
+                gamesContainer.scrollBy({ left: 660, behavior: "smooth" });
+            });
+        });
+    });
+
+
     </script>
 </body>
 </html>
