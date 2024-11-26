@@ -24,8 +24,8 @@
         }
         .games {
             display: grid;
-            grid-template-columns: repeat(10, 200px);
-            grid-template-rows: repeat(3, 300px);
+            grid-template-columns: repeat(20, 200px);
+            grid-template-rows: repeat(5, 300px);
             gap: 20px;
             overflow: hidden;
             width: 660px;
@@ -106,8 +106,8 @@
             gameBoxes.forEach((box, index) => {
                 box.addEventListener("click", function() {
                     modalContent.innerHTML = `
-                        <img src='imagen${index + 1}a.jpg' alt='Juego ${index + 1} - Imagen A'>
-                        <img src='imagen${index + 1}b.jpg' alt='Juego ${index + 1} - Imagen B'>
+                        <img src='img/imagen${index + 1}a.jpg' alt='Juego ${index + 1} - Imagen A'>
+                        <img src='img/imagen${index + 1}b.jpg' alt='Juego ${index + 1} - Imagen B'>
                     `;
                     modal.style.display = "flex";
                 });
@@ -129,36 +129,18 @@
     <div class="container">
         <div class="arrow">&#8592;</div>
         <div class="games">
-            <div class="game-box"><img src="imagen1.jpg" alt="Juego 1"></div>
-            <div class="game-box"><img src="imagen2.jpg" alt="Juego 2"></div>
-            <div class="game-box"><img src="imagen3.jpg" alt="Juego 3"></div>
-            <div class="game-box"><img src="imagen4.jpg" alt="Juego 4"></div>
-            <div class="game-box"><img src="imagen5.jpg" alt="Juego 5"></div>
-            <div class="game-box"><img src="imagen6.jpg" alt="Juego 6"></div>
-            <div class="game-box"><img src="imagen7.jpg" alt="Juego 7"></div>
-            <div class="game-box"><img src="imagen8.jpg" alt="Juego 8"></div>
-            <div class="game-box"><img src="imagen9.jpg" alt="Juego 9"></div>
-            <div class="game-box"><img src="imagen10.jpg" alt="Juego 10"></div>
-            <div class="game-box"><img src="imagen11.jpg" alt="Juego 11"></div>
-            <div class="game-box"><img src="imagen12.jpg" alt="Juego 12"></div>
-            <div class="game-box"><img src="imagen13.jpg" alt="Juego 13"></div>
-            <div class="game-box"><img src="imagen14.jpg" alt="Juego 14"></div>
-            <div class="game-box"><img src="imagen15.jpg" alt="Juego 15"></div>
-            <div class="game-box"><img src="imagen16.jpg" alt="Juego 16"></div>
-            <div class="game-box"><img src="imagen17.jpg" alt="Juego 17"></div>
-            <div class="game-box"><img src="imagen18.jpg" alt="Juego 18"></div>
-            <div class="game-box"><img src="imagen19.jpg" alt="Juego 19"></div>
-            <div class="game-box"><img src="imagen20.jpg" alt="Juego 20"></div>
-            <div class="game-box"><img src="imagen21.jpg" alt="Juego 21"></div>
-            <div class="game-box"><img src="imagen22.jpg" alt="Juego 22"></div>
-            <div class="game-box"><img src="imagen23.jpg" alt="Juego 23"></div>
-            <div class="game-box"><img src="imagen24.jpg" alt="Juego 24"></div>
-            <div class="game-box"><img src="imagen25.jpg" alt="Juego 25"></div>
-            <div class="game-box"><img src="imagen26.jpg" alt="Juego 26"></div>
-            <div class="game-box"><img src="imagen27.jpg" alt="Juego 27"></div>
-            <div class="game-box"><img src="imagen28.jpg" alt="Juego 28"></div>
-            <div class="game-box"><img src="imagen29.jpg" alt="Juego 29"></div>
-            <div class="game-box"><img src="imagen30.jpg" alt="Juego 30"></div>
+            <!-- Ciclo optimizado para generar los elementos de juego -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const gamesContainer = document.querySelector(".games");
+                    for (let i = 1; i <= 30; i++) {
+                        const gameBox = document.createElement("div");
+                        gameBox.classList.add("game-box");
+                        gameBox.innerHTML = `<img src="imagen${i}.jpg" alt="Juego ${i}">`;
+                        gamesContainer.appendChild(gameBox);
+                    }
+                });
+            </script>
         </div>
         <div class="arrow">&#8594;</div>
     </div>
