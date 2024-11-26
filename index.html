@@ -90,7 +90,6 @@
             const leftArrow = document.querySelector(".arrow:first-child");
             const rightArrow = document.querySelector(".arrow:last-child");
             const gamesContainer = document.querySelector(".games");
-            const gameBoxes = document.querySelectorAll(".game-box");
             const modal = document.querySelector(".modal");
             const modalContent = document.querySelector(".modal-content");
             const closeModal = document.querySelector(".close");
@@ -103,14 +102,16 @@
                 gamesContainer.scrollBy({ left: 660, behavior: 'smooth' });
             });
 
-            gameBoxes.forEach((box, index) => {
-                box.addEventListener("click", function() {
+            gamesContainer.addEventListener("click", function(event) {
+                const gameBox = event.target.closest(".game-box");
+                if (gameBox) {
+                    const imgIndex = Array.from(gamesContainer.children).indexOf(gameBox) + 1;
                     modalContent.innerHTML = `
-                        <img src='img/imagen${index + 1}a.jpg' alt='Juego ${index + 1} - Imagen A'>
-                        <img src='img/imagen${index + 1}b.jpg' alt='Juego ${index + 1} - Imagen B'>
+                        <img src='img/imagen${imgIndex}a.jpg' alt='Juego ${imgIndex} - Imagen A'>
+                        <img src='img/imagen${imgIndex}b.jpg' alt='Juego ${imgIndex} - Imagen B'>
                     `;
                     modal.style.display = "flex";
-                });
+                }
             });
 
             closeModal.addEventListener("click", function() {
@@ -122,27 +123,22 @@
                     modal.style.display = "none";
                 }
             });
+
+            // Generate game boxes dynamically
+            for (let i = 1; i <= 30; i++) {
+                const gameBox = document.createElement("div");
+                gameBox.classList.add("game-box");
+                gameBox.innerHTML = `<img src="img/imagen${i}.jpg" alt="Juego ${i}">`;
+                gamesContainer.appendChild(gameBox);
+            }
         });
     </script>
 </head>
 <body>
     <div class="container">
-        <div class="arrow">&#8592;</div>
-        <div class="games">
-            <!-- Ciclo optimizado para generar los elementos de juego -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    const gamesContainer = document.querySelector(".games");
-                    for (let i = 1; i <= 30; i++) {
-                        const gameBox = document.createElement("div");
-                        gameBox.classList.add("game-box");
-                        gameBox.innerHTML = `<img src="img/imagen${i}.jpg" alt="Juego ${i}">`;
-                        gamesContainer.appendChild(gameBox);
-                    }
-                });
-            </script>
-        </div>
-        <div class="arrow">&#8594;</div>
+        <div class="arrow">⬅️</div>
+        <div class="games"></div>
+        <div class="arrow">➡️</div>
     </div>
     <div class="modal">
         <div class="modal-content"></div>
@@ -150,3 +146,4 @@
     </div>
 </body>
 </html>
+
