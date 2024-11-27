@@ -205,14 +205,14 @@
 
         // Generar filas dinámicamente
         const meses = ["Agosto", "Septiembre", "Octubre", "Noviembre"];
-        const letras = ["A", "B", "O", "N"]; // Septiembre corregido a "B"
+        const letras = ["A", "B", "O", "N", R]; // Septiembre corregido a "B"
 
-        for (let row = 1; row <= 4; row++) {
+        for (let row = 1; row <= 5; row++) {
             const gamesContainer = document.querySelector(`#games-row-${row}`);
             const mes = meses[row - 1]; // Obtener el mes correspondiente
             const letra = letras[row - 1]; // Letra correspondiente para las imágenes
 
-            for (let i = 1; i <= 100; i++) {
+            for (let i = 0; i <= 100; i++) {
                 const img = new Image();
                 const imgSrc = `img/${mes}/imagen${letra}${i}.jpg`;
                 img.src = imgSrc;
