@@ -32,7 +32,7 @@
             overflow-x: auto;
             width: 80%; /* 80% del ancho de la pantalla */
             max-width: 1200px; /* Máximo de ancho */
-            height: 350px;
+            height: 320px;
             gap: 15px;
             scroll-behavior: smooth;
             padding: 7px;
@@ -40,7 +40,7 @@
         .game-box {
             min-width: 220px;
             max-width: 220px;
-            height: 330px;
+            height: 290px;
             border: 2px solid #28a745; /* Verde intermedio del degradado */
             border-radius: 10px;
             background: linear-gradient(to bottom, #d4f4dd, #b9fbc0); /* Fondo degradado en tonos verdes claros */
@@ -59,7 +59,7 @@
         }
         .game-box img {
             width: 90%;
-            height: 80%;
+            height: 70%;
             object-fit: cover;
             border-radius: 10px;
             border: 1px solid #28a745; /* Borde verde */
@@ -179,6 +179,14 @@
         <div class="arrow right-arrow" data-row="4">&#8594;</div>
     </div>
 
+    <!-- Fila 5 -->
+    <div class="month-title">Reflexión</div>
+    <div class="row">
+        <div class="arrow left-arrow" data-row="5">&#8592;</div>
+        <div class="games" id="games-row-5"></div>
+        <div class="arrow right-arrow" data-row="5">&#8594;</div>
+    </div>
+
 
     <!-- Modal -->
     <div class="modal">
@@ -204,8 +212,8 @@
         });
 
         // Generar filas dinámicamente
-        const meses = ["Agosto", "Septiembre", "Octubre", "Noviembre"];
-        const letras = ["A", "B", "O", "N", R]; // Septiembre corregido a "B"
+        const meses = ["Agosto", "Septiembre", "Octubre", "Noviembre", "Reflexión"];
+        const letras = ["A", "B", "O", "N", "R"]; // Septiembre corregido a "B"
 
         for (let row = 1; row <= 5; row++) {
             const gamesContainer = document.querySelector(`#games-row-${row}`);
